@@ -19,26 +19,26 @@ var movieRatings = {};
 
 
 async.series([
-        function(callback){
-            mongoose.connect(dburl);
-            callback(null, 'db_connected');
-        },
-        function(callback){
-            movieDao.findAll(function(docs){
-                for(var key in docs){
-                    console.log('getMovieIds: '+docs[key].id);
-                    movieIds.push(docs[key].id);
-                }
-
-                fs.writeFile('data/movieIds.json', JSON.stringify(movieIds), function(err) {
-                    if (err) {
-                        return console.error(err);
-                    }
-                    callback(null, 'step1: init movieIds and store it to movieIds.json');
-                });
-
-            });
-        },
+        //function(callback){
+        //    mongoose.connect(dburl);
+        //    callback(null, 'db_connected');
+        //},
+        //function(callback){
+        //    movieDao.findAll(function(docs){
+        //        for(var key in docs){
+        //            console.log('getMovieIds: '+docs[key].id);
+        //            movieIds.push(docs[key].id);
+        //        }
+        //
+        //        fs.writeFile('data/movieIds.json', JSON.stringify(movieIds), function(err) {
+        //            if (err) {
+        //                return console.error(err);
+        //            }
+        //            callback(null, 'step1: init movieIds and store it to movieIds.json');
+        //        });
+        //
+        //    });
+        //},
         //function(callback){
         //
         //    var count = 0;
@@ -83,13 +83,21 @@ async.series([
         //},
         function(callback){
 
-            fs.readFile('data/movieRatings.dat', function(err, data) {
+            fs.readFile('data/movieIds.json', function(err, ids) {
                 if (err) {
                     return console.error(err);
                 }
-                movieRatings = JSON.parse(data);
-                //console.log(movieRatings);
-                callback(null, 'step4: reStore movieRatings from movieRatings.dat');
+                movieIds = JSON.parse(ids);
+                //console.log(movieIds);
+
+                fs.readFile('data/movieRatings.dat', function(err, ratings) {
+                    if (err) {
+                        return console.error(err);
+                    }
+                    movieRatings = JSON.parse(ratings);
+                    //console.log(movieRatings);
+                    callback(null, 'step4: reStore movieIds and movieRatings from files');
+                });
             });
         },
         //function(callback){

@@ -11,6 +11,7 @@ var movieSchema = new Schema(
     {
         id: { type: Number, index: true },
         name : String,
+        lowerName : String,
         types : [String]
     }
 );

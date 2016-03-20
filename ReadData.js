@@ -12,6 +12,7 @@ function dealOneMovie(line, dao){
 
     movie['id'] = tokens[0];
     movie['name'] = tokens[1];
+    movie['lowerName'] = tokens[1].toLowerCase();
     movie['types'] = [];
 
     var types = tokens[2].split('|');

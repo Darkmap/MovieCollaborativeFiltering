@@ -44,14 +44,12 @@ function findByMovieId(movieId, operation){
 
 function findByMovieIdDesc(movieId, operation){
     MovieSim.find({ $or:[ {'movieId1':movieId},
-        {'movieId2':movieId}]}).sort({'similarity':'1'}).exec(
-        function(err, docs){
-            if(err){
-                return console.error(err);
-            }
-            operation(docs);
+        {'movieId2':movieId}]}, function(err, docs){
+        if(err){
+            return console.error(err);
         }
-    );
+        operation(docs);
+    });
 }
 
 exports.schema = movieSimSchema;
